@@ -147,7 +147,7 @@
 
 ​		⦁	对更多测试用例进行测试，发现上周得到的结果是不对的。对于已经识别出的exactly-one约束，其蕴含的二元子句是否删除呢？测试了不同的测试用例集我发现，对于变量和子句数目越多、规模越大的测试用例，删掉二元子句会显得更高效。
 
-​		![](https://home.szetoyang.com/szeto/wp-content/uploads/2020/03/47f5c23bf3d916e618b66f41f83a938.png)
+​								![](https://home.szetoyang.com/szeto/wp-content/uploads/2020/03/47f5c23bf3d916e618b66f41f83a938.png)
 
 ###### 								图一 是否删除二元子句对比
 
@@ -590,3 +590,203 @@ done
 
 
 ## 十三、第十三次2019年2月15日
+
+## 	1   论文方面
+
+###### Formal Analysis of Deep Binarized Neural Networks
+
+#### 		1 目的
+
+​		深度二值神经网络的形式分析
+
+#### 		2 具体做什么
+
+​		为了理解深度神经网络的属性，我们设计一个分析神经网络属性的框架。我们首先定义一组有趣的属性进行分析，然后验证深度神经网络是否具有这些属性。我们使用BNN，因为他可以使用发达的布尔可满足性和整数线性规划方法表示和分析。 我们的主要结果之一是将二值化神经网络精确表示为布尔公式。 我们还将讨论在搜索过程中如何利用神经网络的结构。
+
+#### 		3 论文主要内容
+
+​		我们首先讨论神经网络的一组有趣的属性，包括与网络的输入和输出相关的属性，例如 鲁棒性和可逆性，以及与两个网络相关的属性，例如网络等效性。
+
+​		我们讨论了如何将二值化的神经网络表示为布尔或ILP公式，以及如何以相同的形式表示我们识别的属性。
+
+​		最后，我们考虑了在使用决策程序进行BNN推理时面临的主要挑战，以及如何利用神经网络的结构特性来潜在地解决这些挑战。
+
+​		要把BNN编码为布尔公式，需要保证BNN所有有效的输入输出对都是布尔公式的解。
+
+###### Verifying Properties of Binarized Deep Neural Networks
+
+#### 		1 目的
+
+​		验证二值化深度神经网络的属性
+
+#### 		2 贡献
+
+​		构造了一种将BNN精确地编码为布尔公式的方法。据我们所知，这是使用网络的精确布尔编码来验证深度神经网络的属性的第一种方法（首创性）。
+
+#### 		3 知识点
+
+​		论文中定义了神经网络通用的几个重要属性，包括
+
+​		Adversarial Network Robustness（对抗网络的鲁棒性）：如果对输入的细微扰动不会导致分类错误，则网络对于输入是鲁棒的。
+
+​		Network Equivalence（网络的等效性）：如果两个网络F1和F2在从域中提取的所有输入上生成的输出相同，则它们是等效的。
+
+###### Verifying Binarized Neural Networks by Angluin-Style Learning
+
+#### 		1 目的
+
+​		用Angluin-Style Learning验证二值神经网络的属性。
+
+#### 		2 具体做什么
+
+​		把给定区域上的神经网络编译为OBDD（有序二元决策图）。本文的方法适用于具有离散输入和输出的神经网络。BNN在运行时具有二元权重和激活，从而提高了空间和计算效率。BNN的一个属性是鲁棒性，输入X附近区域Sx和X的输出一致。Sx编码为CNF，检查其中的反例的个数、概率、子集、共同特点。以图像分类为例，我们的新技术使我们能够对距离某些目标图像（例如狗）相距几个像素的所有图像执行推理。 尽管以前的方法仅告诉我们可以将狗图像附近的另一个图像分类为猫，但是我们的新方法可以确定有多少附近图像被分类为猫，并确定所有此类图像之间共享的关键特征。 此外，素数查询在狗图像中标识出最少的像素集，即使我们修改了一些未固定的像素，也可以保证正确的分类。为了推理BNN，我们将它们编译成易于处理的表示形式，然后将验证查询应用于已编译的表示形式。 每个输入区域都会进行一次编译，如果编译成功，则可以使人们有效地回答一系列NP难的查询。
+
+#### 		3 相关表示
+
+```
+BNN->OBDD
+B表示BNN
+S表示感兴趣的输入区域
+BS表示B在S上的功能
+D表示OBDD
+∀x ∈ S , D（x）= B（x）
+
+```
+
+#### 		4 算法思路
+
+​		首先，我们构造一个假设OBDD，然后迭代调用等价查询，添加OBDD节点，直到其输出与BS一致为止。 为了有效地回答等价查询，我们将BNN和假设OBDD编码为CNF，并要求区域S也可以编码为CNF。 当算法终止时，它返回一个OBDD D，使得D（x）= B（x）：∀x∈S。 然后，我们通过对OBDD D执行有效的验证查询来验证BNN B的属性。
+
+#### 		5 论文结构
+
+- 第2节介绍了BNN和OBDD。
+
+- 第3节描述了BNN和OBDD到CNF的编码。
+
+- 第4节介绍了Angluin-style learning算法。
+
+- 第5节中的编译算法使用了该算法。
+
+- 第6节中报告了关于编译算法效率的实验。
+
+- 第7节中进行了案例研究。最后讨论了相关工作。
+
+- 第8节中讨论了相关工作。
+
+- 第9节中得出结论。
+
+  ​	关于这三篇论文的总结：实验都是关于验证神经网络BNN的属性，第一步要做的是把BNN编码为布尔公式，第一篇论文详细介绍了一种方法，第二篇论文实现了BNN到布尔公式的精确编码。第三篇将BNN编译为OBDD。首先将BNN和OBDD都编码为CNF，引入了一种新的算法Angluin-style learning将BNN编码为OBDD。在把BNN编码为布尔公式之后，我们使用SAT求解器分析BNN的属性，常见的重要属性由网络鲁棒性和网络等效性等。
+
+  ## 2   学习方面
+
+  ​	吴恩达课程笔记
+
+![](https://home.szetoyang.com/szeto/wp-content/uploads/2020/03/76096cb82e6d3531af98922afdc69f9.png)
+
+​		关于机器学习的一种定义，计算机通过学习经验E来实现任务T和度量指标P，计算机在任务T上的表现由指标P度量，由经验E提高。当我们判断一个问题是不是机器学习问题，我们可以尝试找到这三种指标来衡量。例如系统帮我们筛选垃圾邮件，我们每一次手动把一个邮件标签为垃圾邮件都是一条经验E，而我们的任务T是分类一个邮件是否为垃圾邮件，正确筛选的比例就是度量指标P。
+
+![](https://home.szetoyang.com/szeto/wp-content/uploads/2020/03/4db12cc20548cd0c0506c92bc8ff916.png)
+
+​		监督学习Supervised learning 
+
+​		回归Regression
+
+​		房价预测的例子中，给定一组离散的房子大小和房价数据，根据这些经验，我们已知房子大小做房价的预测。我们使用线性模拟和非线性模拟得到的结果是不同的。输出结果是无限且连续的，这样的问题属于回归问题。
+
+![](https://home.szetoyang.com/szeto/wp-content/uploads/2020/03/8610d7b61905e343183ca9f8b1cec2c.png)
+
+​		乳腺癌预测结果假定有患病和不患病两种，给定一组离散的肿块大小和是否患病数据，根据这些经验，我们已知肿块大小做是否患病的预测。输出结果是有限且离散的，这样的问题是分类问题。同理，根据肿块大小对应的患病可以分类为不同种类的癌症，这样输出的结果可能不只是两个，而是多个。                               
+
+​		如果我们收集的数据中，影响乳腺癌预测的因素不只有肿块大小，还包括年龄，那么如上图所示，蓝色和红色代表的数据是经验，已知肿块大小和年龄对应粉红色点，预测是良性的概率比恶性更大。推而广之，我们的数据集中影响因素可能成百上千非常多，对应的图就会变成多维。
+
+![](https://home.szetoyang.com/szeto/wp-content/uploads/2020/03/dc651a1e30d4e787b2b0e9aa48b859d.png)
+
+![](https://home.szetoyang.com/szeto/wp-content/uploads/2020/03/d1ccb83bc0832cf729fea7e9525ae92.png)
+
+![](https://home.szetoyang.com/szeto/wp-content/uploads/2020/03/0abcb8419d84d57cff1bdd934bac042.png)
+
+​		监督学习存在right answer，我们事先知道输出结果的可能取值。
+
+​		非监督学习，给定一组数据，分析这组数据的结构，我们事先不知道从这组数据我们能得出什么。
+
+​		Unsupervised learning非监督学习
+
+![](https://home.szetoyang.com/szeto/wp-content/uploads/2020/03/0316c1c56f2dcd703f67034fd13c9c0.png)
+
+​		Clustering algorithms（聚类算法）：举几个例子，哪些组件在一起效率更高，人的社会圈子网，市场分区，天文数据分析等，我们事先都不知道分析这些数据的结果会有哪几种，解决这样问题的算法称为聚类算法。聚类算法是无监督学习的一种。
+
+![](https://home.szetoyang.com/szeto/wp-content/uploads/2020/03/c0247cd405f7fc13816795e1309547e.png)
+
+![](https://home.szetoyang.com/szeto/wp-content/uploads/2020/03/4f1ff0c5853014e2b4cde194027bcab.png)
+
+​		Cocktail party problem（鸡尾酒会问题）：很多人聚集在酒会上，声音混合在一起。如图两个话筒收集到的两个人的声音根据距离不同声音大小各有侧重。从这一组混合声音中提取到主要声音，过滤掉杂音，就能分别得到两个说话者的声音。这样的问题成为鸡尾酒会问题。
+
+​		假设函数和代价函数：
+
+![](https://home.szetoyang.com/szeto/wp-content/uploads/2020/03/baa7011e1ad5b68ab12d01aa1dc90a9.png)
+
+​		对数据集进行回归模拟得到的函数称为假设函数，我们先讨论最简单的单变量线性模拟的情况。不同的假设函数参数不同，从而模拟效果也有好有坏。为评估假设函数好坏，我们引入代价函数。
+
+![](https://home.szetoyang.com/szeto/wp-content/uploads/2020/03/8dc4414d1fc9e444ca0fff4eb05a9bd.png)
+
+​		对于线性回归，我们的代价函数可以设为假设函数预测值与实际值的差平方之和，当代价函数值最小时，对应的假设函数是拟合度最好的。
+
+![](https://home.szetoyang.com/szeto/wp-content/uploads/2020/03/9a531830d770c66d24c53cc43aa207b.png)
+
+​		我们拿最简单的例子来分析，数据有（1，1）、（2，2）、（3，3）三个，规定假设函数过原点，假设函数只有一个参数。可以得到代价函数是一条抛物线，在参数为1时，代价为0。
+
+### 	3   实验方面
+
+​		将收集到的实验数据制图，首先需要把实验输出结果变成json格式。
+
+```
+<?php
+    $fileName = $argv[1];
+    $file = fopen($fileName,'r');
+    $result1 = [];
+    $result2 = [];
+    $i = 1;
+    while(!feof($file)){
+        $tmpLine = fgets($file);
+        print_r($tmpLine);
+        if($tmpLine=="Begin Debugging...\n"){
+            $result1["stats"]['instance'.$i]=[
+                'status'=> true,
+                'rtime'=>fgets($file)+0
+            ];
+            $i++;
+        }
+    }
+    $result2["preamble"]=[
+        "program"=>$argv[2].'.mc',
+    ];
+    $strResult1 = json_encode($result1);
+    $strResult2 = json_encode($result2);
+    $result = substr($strResult1,0,-1).','.substr($strResult2,1);    file_put_contents("/home/szetoyang/Desktop/StudySpace/ModelCounter/log/".$argv[2].'.json',$result);
+
+```
+
+​		使用mkplot工具制表，成功得到图像。横坐标是测试用例编号，纵坐标是运行时间（单位毫秒ms）
+
+ 		绘制一条曲线的命令
+
+```
+python3 mkplot.py -p cactus -b png --save-to /home/szetoyang/Desktop/StudySpace/ModelCounter/log/us.png 
+--ylabel=time(ms) --xlabel=flat75- 
+--xmax 101 --xmin 0 --ymax 40 --ymin 3 
+--shape standard -t 1000 /home/szetoyang/Desktop/StudySpace/ModelCounter/log/us.json
+
+```
+
+![](https://home.szetoyang.com/szeto/wp-content/uploads/2020/03/8a816ead8733df3f8ee4d324a994041.png)
+
+​		绘制两条曲线的命令
+
+```
+python3 mkplot.py -p cactus -b png --save-to /home/szetoyang/Desktop/StudySpace/ModelCounter/log/both.png 
+--ylabel=time(ms) --xlabel=flat75- 
+--xmax 101 --xmin 0 --ymax 40 --ymin 3 
+--shape standard -t 1000 /home/szetoyang/Desktop/StudySpace/ModelCounter/log/us.json /home/szetoyang/Desktop/StudySpace/ModelCounter/log/lsh.json
+```
+
+​		待更新…
