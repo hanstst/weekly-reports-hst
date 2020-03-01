@@ -141,7 +141,7 @@
 
 ​		⦁	对更多测试用例进行测试，发现上周得到的结果是不对的。对于已经识别出的exactly-one约束，其蕴含的二元子句是否删除呢？测试了不同的测试用例集我发现，对于变量和子句数目越多、规模越大的测试用例，删掉二元子句会显得更高效。
 
-​		![https://home.szetoyang.com/szeto/wp-content/uploads/2020/03/47f5c23bf3d916e618b66f41f83a938.png]()
+​		![](https://home.szetoyang.com/szeto/wp-content/uploads/2020/03/47f5c23bf3d916e618b66f41f83a938.png)
 
 ###### 								图一 是否删除二元子句对比
 
@@ -149,13 +149,13 @@
 
 ​		图中靠上的蓝色线是不删除二元子句的运行结果，下面的橘色线是删除后运行的结果。删除后的运行时间更低，运行效率更高。规模越大的测试用例效果越明显。
 
-![https://home.szetoyang.com/szeto/wp-content/uploads/2020/03/4ef189c42de56f7929051baa32d0dba.png]()
+![](https://home.szetoyang.com/szeto/wp-content/uploads/2020/03/4ef189c42de56f7929051baa32d0dba.png)
 
 ###### 								图二 效率对比C2D和D4
 
 ​		上图蓝色柱是C2D，橘色柱是我所优化后的编译器，灰色柱是D4。纵坐标是运行时间单位毫秒。在上图测试用例中，我的编译器和D4都比C2D快很多。但对于规模特别大的测试用例（变量和子句数上千），我的编译器运行时间就会和C2D在一个数量级，与D4相比差很多（图上为列出）。因此目前我优化的编译器在处理规模较小的测试用例中更有优势。
 
-![https://home.szetoyang.com/szeto/wp-content/uploads/2020/03/3e583f024397dc6031419ce443b5cb5.png]()
+![](https://home.szetoyang.com/szeto/wp-content/uploads/2020/03/3e583f024397dc6031419ce443b5cb5.png)
 
 ###### 								图三 效率对比D4
 
